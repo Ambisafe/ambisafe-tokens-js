@@ -4,15 +4,16 @@
   "description": "node.js library for encoding, decoding, and verifying Ethereum Web Tokens (EWTs)",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha test.js"
   },
   "author": "Ambisafe, Inc.",
   "license": "MIT",
   "dependencies": {
-    "base64url": "^1.0.4",
-    "ecdsa-sig-formatter": "^1.0.2",
-    "elliptic": "^5.1.0",
-    "ethereumjs-util": "^4.4.1"
+    "base64url": "^1.0.6",
+    "ecdsa-sig-formatter": "^1.0.5",
+    "elliptic": "^5.2.1",
+    "ethereumjs-util": "^4.4.1",
+    "web3": "^0.16.0"
   },
   "files": [
     "lib/",
