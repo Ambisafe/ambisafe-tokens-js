@@ -28,6 +28,21 @@ var sampleSig = 'fuDmK0boDu4O7VFdb7FaW1_0HmBksOTMD6gU1nz0wlkKIqMMKL2162x7okbwrVn
 //s = 0x0a22a30c28bdb5eb6c7ba246f0ad59de48f38f6536add57fe6508e99c3b901a1
 //v = 27
 
+var sampleDecodedToken2 = {
+    header : {
+      alg: 'ES256K',
+      typ: 'EWT'
+    },
+    payload : {
+        val: '0x692a70d2e424a56d2c6c27aa97d1a86395877b3a',
+        nonce: 123456789
+    }
+    //this should produce:
+    //sha3(123456789, "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a");
+    //-> 0xe7665252ce46375d48da614659f990aa95d574b8c281047fa5d5dc4d9858c424
+};
+var sampleSig2 = 'rAZ-20Co5mF2Gq8LksSLZAfKB0aszMtSX-RC0Y8mRkY6G9Giy--XB_1yQ6nf2c0FIPbgpmTI8ySnGqXX3cbBQQ';
+
 
 describe('TokenSigner', function() {
 
@@ -38,6 +53,16 @@ describe('TokenSigner', function() {
     expect(decodedToken.signature).to.eql(sampleSig);
     expect(decodedToken.payload).to.eql(sampleDecodedToken.payload);
     expect(decodedToken.header).to.eql(sampleDecodedToken.header);
+    done();
+  });
+
+  it('should sign a setup request so it can be verified in solidity.', function(done) {
+    var tokenSigner = new TokenSigner('ES256K', rawPrivateKey);
+    var token = tokenSigner.sign(sampleDecodedToken2.payload);
+    var decodedToken = decodeToken(token);
+    expect(decodedToken.signature).to.eql(sampleSig2);
+    expect(decodedToken.payload).to.eql(sampleDecodedToken2.payload);
+    expect(decodedToken.header).to.eql(sampleDecodedToken2.header);
     done();
   });
 });
